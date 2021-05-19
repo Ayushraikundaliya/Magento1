@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Ccc_Vendor>
-			<version>1.0.1</version>
+			<version>1.0.6</version>
 		</Ccc_Vendor>
 	</modules>
 
@@ -28,7 +28,7 @@
 		</layout>
 	</adminhtml>
 
-	<!-- <frontend>
+	<frontend>
 		<routers>
 			<vendor>
 				<use>standard</use>
@@ -55,7 +55,7 @@
 				</observers>
 			</controller_action_layout_load_before>
 		</events>
-	</frontend> -->
+	</frontend>
 
 	<global>
 		<helpers>
@@ -102,7 +102,7 @@
 					<eav_attribute>
 						<table>vendor_eav_attribute</table>
 					</eav_attribute>
-					<!-- <product>
+					<product>
 						<table>vendor_product_entity</table>
 					</product>
 					<product_attribute_group>
@@ -110,7 +110,7 @@
 					</product_attribute_group>
 					<product_request>
 						<table>vendor_product_request</table>
-					</product_request> -->
+					</product_request>
 				</entities>
 			</vendor_resource>
 		</models>

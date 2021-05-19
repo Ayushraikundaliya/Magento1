@@ -20,7 +20,7 @@
 					<sort_order>100</sort_order>
 					<action>*/vendor_set</action>
 				</vendor_set>
-                <!-- <products translate="title" module="vendor">
+                <products translate="title" module="vendor">
                     <title>Product</title>
                     <children>
                     	<products translate="title" module="vendor">
@@ -37,7 +37,7 @@
                         </sets>
                     </children>
                     <sort_order>200</sort_order>
-                </products> -->
+                </products>
 			</children>
 		</vendor>
 	</menu>
