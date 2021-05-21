@@ -43,7 +43,7 @@ class Ccc_Vendor_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Block_Widge
             array('vendor_product_request' => 'vendor_product_request'),
             'vendor_product_request.product_id = e.entity_id',
             array('vendor_product_request.request_type','vendor_product_request.approve_status')
-        )->where('vendor_product_request.approve_status = "Pending"');
+        );
 
 
         $this->setCollection($collection);
