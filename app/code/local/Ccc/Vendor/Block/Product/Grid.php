@@ -13,7 +13,8 @@ class Ccc_Vendor_Block_Product_Grid extends Mage_Core_Block_Template
         $collection = Mage::getModel('vendor/product')->getCollection()
             ->addAttributeToSelect('name')
             ->addAttributeToSelect('price')
-            ->addAttributeToSelect('entity_id');
+            ->addAttributeToSelect('entity_id')
+            ->addAttributeToFilter('vendor_id', ['eq' => $this->getVendor()->getId()]);
             //->addAttributeToSelect('status')
             /*->addAttributeToSelect('vendor_status');*/
             //$collection->setStoreId($store->getId());
