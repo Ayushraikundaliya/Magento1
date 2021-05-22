@@ -32,8 +32,8 @@
 			<tr>
 				<td><?php echo $attribute->getFrontendLabel(); if($attribute->getIsRequired()){echo ' *';}?></td>
 				<td>
-					<input class="productForm" type="number" min="0" step="any" id="<?php echo $attribute->getAttributeCode() ?>" name="<?php echo $attribute->getAttributeCode() ?>" value="<?php echo $product[$attribute->getAttributeCode()] ?>"
-					<?php if($attribute->getIsRequired()){echo 'required';} ?>>
+					<input class="productForm"  type="number" min="0" step="any" id="<?php echo $attribute->getAttributeCode() ?>" name="<?php echo $attribute->getAttributeCode() ?>" value="<?php echo $product[$attribute->getAttributeCode()] ?>"
+					<?php if($attribute->getIsRequired()){echo 'required';} ?> required oninvalid="invalidFunction(event, '<?php echo $attribute->getFrontendInput() ?> is mandatory <br>',this)">
 				</td>
 			</tr>
 		<?php elseif($attribute->getFrontendInput() == 'boolean'): ?>

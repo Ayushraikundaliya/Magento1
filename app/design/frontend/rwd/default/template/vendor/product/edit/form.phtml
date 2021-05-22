@@ -1,6 +1,7 @@
 <?php $product = $this->getCurrentProduct()->getData(); ?>
 <div class="page-title">
     <h1><?php echo $this->__('Products Information') ?></h1>
+    <span class="error" id="errorHeader"></span>
 </div>
 <center><div id="messageHtml" class="error"></div></center>
 <form action="<?=$this->getSaveUrl(); ?>" method="POST" id="form-validate">
@@ -15,6 +16,16 @@
     
 </form>
 <script type="text/javascript">
+    function invalidFunction(e, message,row) {
+        e.preventDefault();
+        //console.log(row);
+        divs = jQuery(row).closest('div').attr('id');
+        var res = divs.substring(0,8);
+        getTabContent('',res);
+        document.getElementById('errorHeader').innerHTML += message;
+        return;
+    }
+    //document.getElementById('errorHeader').innerText = 'Jay';
     var base = new Base();
     var formData = <?php echo json_encode($product) ?>;
     setInterval(function(){ jQuery('#messageHtml').html('');},5000)
