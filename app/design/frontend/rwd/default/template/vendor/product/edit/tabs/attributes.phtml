@@ -7,40 +7,40 @@
 			<tr>
 				<td><?php echo $attribute->getFrontendLabel(); if($attribute->getIsRequired()){echo ' *';}?></td>
 				<td>
-					<input class="productForm" type="text" id="<?php echo $attribute->getAttributeCode() ?>" name="<?php echo $attribute->getAttributeCode() ?>" 
+					<input class="productForm" type="text" name="<?php echo $attribute->getAttributeCode() ?>" 
 					value="<?php echo $product[$attribute->getAttributeCode()] ?>"
-					<?php if($attribute->getIsRequired()){echo 'required';} ?>>
+					<?php if ($attribute->getIsRequired()) : ?> required id="required" <?php endif; ?>>
 				</td>
 			</tr>
 		<?php elseif($attribute->getFrontendInput() == 'textarea'): ?>
 			<tr>
 				<td><?php echo $attribute->getFrontendLabel(); if($attribute->getIsRequired()){echo ' *';}?></td>
 				<td>
-					<textarea class="productForm"  id="<?php echo $attribute->getAttributeCode() ?>" name="<?php echo $attribute->getAttributeCode() ?>" <?php if($attribute->getIsRequired()){echo 'required';} ?>> <?php echo $product[$attribute->getAttributeCode()] ?> </textarea>
+					<textarea class="productForm" name="<?php echo $attribute->getAttributeCode() ?>" <?php if ($attribute->getIsRequired()) : ?> required id="required" <?php endif; ?>> <?php echo $product[$attribute->getAttributeCode()] ?> </textarea>
 				</td>
 			</tr>
 		<?php elseif($attribute->getFrontendInput() == 'date'): ?>
 			<tr>
 				<td><?php echo $attribute->getFrontendLabel(); if($attribute->getIsRequired()){echo ' *';}?></td>
 				<td>
-					<input class="productForm" type="date" id="<?php echo $attribute->getAttributeCode() ?>" name="<?php echo $attribute->getAttributeCode() ?>"
+					<input class="productForm" type="date"  name="<?php echo $attribute->getAttributeCode() ?>"
 						value="<?php echo date('d-M-Y', strtotime($product['created_at'])); ?>"
-					<?php if($attribute->getIsRequired()){echo 'required';} ?>>
+					<?php if ($attribute->getIsRequired()) : ?> required id="required" <?php endif; ?>>
 				</td>
 			</tr>
 		<?php elseif($attribute->getFrontendInput() == 'price'): ?>
 			<tr>
 				<td><?php echo $attribute->getFrontendLabel(); if($attribute->getIsRequired()){echo ' *';}?></td>
 				<td>
-					<input class="productForm"  type="number" min="0" step="any" id="<?php echo $attribute->getAttributeCode() ?>" name="<?php echo $attribute->getAttributeCode() ?>" value="<?php echo $product[$attribute->getAttributeCode()] ?>"
-					<?php if($attribute->getIsRequired()){echo 'required';} ?> required oninvalid="invalidFunction(event, '<?php echo $attribute->getFrontendInput() ?> is mandatory <br>',this)">
+					<input class="productForm"  type="number" min="0" step="any"  name="<?php echo $attribute->getAttributeCode() ?>" value="<?php echo $product[$attribute->getAttributeCode()] ?>"
+					<?php if ($attribute->getIsRequired()) : ?> required id="required" <?php endif; ?>>
 				</td>
 			</tr>
 		<?php elseif($attribute->getFrontendInput() == 'boolean'): ?>
 			<tr>
 				<td><?php echo $attribute->getFrontendLabel(); if($attribute->getIsRequired()){echo ' *';}?></td>
 				<td>
-					<select class="productForm" id="<?php echo $attribute->getAttributeCode() ?>" name="<?php echo $attribute->getAttributeCode() ?>" <?php if($attribute->getIsRequired()){echo 'required';} ?>>
+					<select class="productForm"  name="<?php echo $attribute->getAttributeCode() ?>" <?php if($attribute->getIsRequired()){echo 'required';} ?>>
 						<option value="0">0</option>
 						<option value="1">1</option>
 					</select>
@@ -50,7 +50,7 @@
 			<tr>
 				<td><?php echo $attribute->getFrontendLabel(); if($attribute->getIsRequired()){echo ' *';}?></td>
 				<td>
-					<select class="productForm" id="<?php echo $attribute->getAttributeCode() ?>" name="<?php echo $attribute->getAttributeCode() ?>" <?php if($attribute->getIsRequired()){echo 'required';} ?>>
+					<select class="productForm"  name="<?php echo $attribute->getAttributeCode() ?>" <?php if($attribute->getIsRequired()){echo 'required';} ?>>
 						<?php $options = $this->getAttributeOptions($attribute->getAttributeId()); ?>
 						<option value="">Select Option</option>
 						<?php foreach ($options as $optionId => $option): ?>
@@ -63,7 +63,7 @@
 			<tr>
 				<td><?php echo $attribute->getFrontendLabel(); if($attribute->getIsRequired()){echo ' *';}?></td>
 				<td>
-					<select class="productForm" id="<?php echo $attribute->getAttributeCode() ?>" name="<?php echo $attribute->getAttributeCode() ?>" <?php if($attribute->getIsRequired()){echo 'required';} ?>
+					<select class="productForm"  name="<?php echo $attribute->getAttributeCode() ?>" <?php if($attribute->getIsRequired()){echo 'required';} ?>
 						<?php if($product[$attribute->getAttributeCode()] == $key){echo "selected";} ?>>
 						<?php foreach ($this->getStatusOption() as $key => $label): ?>
 							<option value="<?php echo $key; ?>" 
@@ -78,15 +78,15 @@
 			<tr>
 				<td><?php echo $attribute->getFrontendLabel(); if($attribute->getIsRequired()){echo ' *';}?></td>
 				<td>
-					<input class="productForm" id="<?php echo $attribute->getAttributeCode() ?>" type="number" min="0" step="any" name="<?php echo $attribute->getAttributeCode() ?>" value="<?php echo $product[$attribute->getAttributeCode()] ?>"
-					<?php if($attribute->getIsRequired()){echo 'required';} ?>>
+					<input class="productForm"  type="number" min="0" step="any" name="<?php echo $attribute->getAttributeCode() ?>" value="<?php echo $product[$attribute->getAttributeCode()] ?>"
+					<?php if ($attribute->getIsRequired()) : ?> required id="required" <?php endif; ?>>
 				</td>
 			</tr>
 		<?php elseif($attribute->getFrontendLabel() == 'Visibility'): ?>
 			<tr>
 				<td><?php echo $attribute->getFrontendLabel(); if($attribute->getIsRequired()){echo ' *';}?></td>
 				<td>
-					<select class="productForm" id="<?php echo $attribute->getAttributeCode() ?>" name="<?php echo $attribute->getAttributeCode() ?>" <?php if($attribute->getIsRequired()){echo 'required';} ?>>
+					<select class="productForm"  name="<?php echo $attribute->getAttributeCode() ?>" <?php if($attribute->getIsRequired()){echo 'required';} ?>>
 						<option value="">-- Please Select --</option>
 						<?php foreach ($this->getVisiblityOption() as $key => $optionValue): ?>
 							<option value="<?php echo $key; ?>" 
@@ -102,7 +102,7 @@
 				<td><?php echo $attribute->getFrontendLabel(); if($attribute->getIsRequired()){echo ' *';}?></td>
 				<td>
 					<?php $selectedOption = explode(',', $product[$attribute->getAttributeCode()]); ?>
-					<select class="productForm" id="<?php echo $attribute->getAttributeCode() ?>" 
+					<select class="productForm"  
 							name="<?php echo "{$attribute->getAttributeCode()}[]" ?>" multiple <?php if($attribute->getIsRequired()){echo 'required';} ?>>
 							<option value="">Select Option</option>
 						<?php $options = $this->getAttributeOptions($attribute->getAttributeId()); ?>

@@ -4,14 +4,14 @@
     <span class="error" id="errorHeader"></span>
 </div>
 <center><div id="messageHtml" class="error"></div></center>
-<form action="<?=$this->getSaveUrl(); ?>" method="POST" id="form-validate">
+<form action="<?=$this->getSaveUrl(); ?>" method="POST" id="product">
     <div id="vendorProductForm">
         
     </div><br>
 	<div style="float:right;">
         <p class="form-buttons"><button id="" title="Back" type="button" class="scalable_back_button" onclick="setLocation('<?php echo $this->getBackUrl() ?>')"><span><span><span>Back</span></span></span></button>
         <button id="id_52db7b617f25eaaf05842dc36f56bf6a" title="Reset" type="button" class="scalable_button" onclick="setLocation(window.location.href)"><span><span><span>Reset</span></span></span></button>
-        <button type="submit" class="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('SAVE')) ?>"><span><span><?php echo $this->__('SAVE') ?></span></span></button>
+        <button type="button" class="button" onclick="return checkDetails();" title="<?php echo Mage::helper('core')->quoteEscape($this->__('SAVE')) ?>"><span><span><?php echo $this->__('SAVE') ?></span></span></button>
     </div>
     
 </form>
@@ -24,6 +24,25 @@
         getTabContent('',res);
         document.getElementById('errorHeader').innerHTML += message;
         return;
+    }
+    function checkDetails() {
+        flag = 0;
+        jQuery("input,select,textarea").each(function() {
+            if (jQuery(this).attr("id") == 'required') {
+                if (jQuery(this).val() == "" || jQuery(this).val() == undefined) {
+                    //ptag = jQuery(this).parent().prev().children()[0];
+                    ptag = jQuery(this).parent().prev();
+                    alert("Please Fill " + jQuery(ptag).text().trim() + " value");
+                    flag = 1;
+                    return false;
+                }
+            }
+        });
+        if (flag) {
+            return false;
+        } else {
+            jQuery("#product").submit();
+        }
     }
     //document.getElementById('errorHeader').innerText = 'Jay';
     var base = new Base();
