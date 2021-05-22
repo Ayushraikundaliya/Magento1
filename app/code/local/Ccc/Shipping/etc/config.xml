@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Ccc_Shipping>
+			<version>1.0.0</version>
+		</Ccc_Shipping>
+	</modules>
+
+	<default>
+		<carriers>
+			<express>
+				<active>1</active>
+				<model>ccc_shipping/express</model>
+				<title>Express Shipping</title>
+				<price>10.00</price>
+			</express>
+		</carriers>
+	</default>
+
+	<global>
+		<models>
+			<ccc_shipping>
+				<class>Ccc_Shipping_Model</class>
+			</ccc_shipping>
+		</models>
+
+		<helpers>
+			<ccc_shipping>
+				<class>Ccc_Shipping_Helper</class>
+			</ccc_shipping>
+		</helpers>
+	</global>
+</config>
