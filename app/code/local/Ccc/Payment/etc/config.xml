@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Ccc_Payment>
+			<version>1.0.0</version>
+		</Ccc_Payment>
+	</modules>
+
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<ccc_payment>Ccc_Order_Adminhtml</ccc_payment>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+	
+	<default>
+		<payment>
+			<cod>
+				<model>ccc_payment/cod</model>
+				<active>0</active>
+				<!-- <order_status>processing</order_status> -->
+				<title>COD</title>
+				<allowspecific>0</allowspecific>
+                <!-- <group>offline</group> -->
+			</cod>
+		</payment>
+	</default>
+
+	<global>
+		<models>
+			<ccc_payment>
+				<class>Ccc_Payment_Model</class>
+			</ccc_payment>
+		</models>
+
+		<helpers>
+			<ccc_payment>
+				<class>Ccc_Payment_Helper</class>
+			</ccc_payment>
+		</helpers>
+	</global>
+</config>
