@@ -32,7 +32,7 @@
 			<tr>
 				<td><?php echo $attribute->getFrontendLabel(); if($attribute->getIsRequired()){echo ' *';}?></td>
 				<td>
-					<input class="productForm"  type="number" min="0" step="any"  name="<?php echo $attribute->getAttributeCode() ?>" value="<?php echo $product[$attribute->getAttributeCode()] ?>"
+					<input class="productForm"  type="number" min="1" step="any"  name="<?php echo $attribute->getAttributeCode() ?>" value="<?php echo $product[$attribute->getAttributeCode()] ?>"
 					<?php if ($attribute->getIsRequired()) : ?> required id="required" <?php endif; ?>>
 				</td>
 			</tr>

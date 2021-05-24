@@ -97,4 +97,17 @@ class Ccc_Vendor_Product_GroupController extends Mage_Core_Controller_Front_Acti
         
         $this->_redirect('*/*/');
     }
+
+    public function deleteAction() {
+        try {
+            $groupId = $this->getRequest()->getParam('group_id');
+            $model = Mage::getModel('eav/entity_attribute_group')->load($groupId)->delete();
+            $groupModel = Mage::getModel('vendor/product_attribute_group')->load($groupId, 'attribute_group_id')->delete();
+            Mage::getSingleton('vendor/session')->addSuccess(Mage::helper('vendor')->__('Group has been deleted successfully.'));
+        } catch (Exception $e) {
+            Mage::getSingleton('vendor/session')->addError(Mage::helper('vendor')->__('An error occurred while deleting this group.'));
+        }
+        $this->_redirect('*/*/');
+        
+    }
 }
