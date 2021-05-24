@@ -122,137 +122,58 @@ class Ccc_Vendor_Adminhtml_ProductController extends Mage_Adminhtml_Controller_A
         $this->_redirect('*/*/');
     }
 
-    public function newApproveAction()
+    public function approvedAction()
     {
-        $vendor = Mage::getSingleton('vendor/vendor');
-        /*echo "<pre>";
-        print_r($this->getRequest()->getParam('id'));
-        die();*/
-        $productId = (int) $this->getRequest()->getParam('id');
-        $product = $this->_initProduct();
+        $productId = Mage::getModel('vendor/product_request')->load($this->getRequest()->getParam('id'))->getProductId();
+        $vendorId = Mage::getModel('vendor/product_request')->load($this->getRequest()->getParam('id'))->getVendorId();
 
-        try {
+        $vendorProduct = Mage::getModel('vendor/product')->load($productId)->getData();
 
-            if ($productId && !$product->getId()) {
-                $this->_getSession->addError('This product no longer exists');
-                $this->_redirect('*/*/');
-            }
-            $productRequestModel = Mage::getResourceModel('vendor/product_request_collection')
-                ->addFieldtoFilter('product_id',array('eq',$product->getId()))->load()->getLastItem();
+        
+        $catalogProduct = Mage::getModel('catalog/product');
 
-            if ($productRequestModel->getRequestType() == 'Edited' && $productRequestModel->getCatalogProductId()) {
-                $this->_forward('editApprove');
-                return;
-            }
-            
-            if ($productRequestModel->getRequestType() == 'Deleted') {
-                $this->_forward('delete');
-                return;
-            }
-            $catalogProductModel = Mage::getModel('catalog/product');
-            $entityType = $catalogProductModel->getResource()->getEntityType();
-            $defaultAttributesetId = $entityType->getDefaultAttributeSetId();
-            $productData = $product->getData();
-            unset($productData['entity_id']);
-            $catalogProductModel->addData($productData);
-            $catalogProductModel->setStoreId($this->getRequest()->getParam('store',0));
-            $catalogProductModel->setEntityType($entityType);
-            $catalogProductModel->setAttributeSetId($defaultAttributesetId);
-            
-            if ($catalogProductModel->save()) {
-               
-                $productRequestModel->setProductId($productId);
-                
-                $productRequestModel->setCatalogProductId($catalogProductModel->getId());
-                $productRequestModel->setApproveStatus('Approved');
-                $productRequestModel->setCreatedAt($product->getCreatedAt());
-                $productRequestModel->setApprovedAt(time());
-                $productRequestModel->setRequestType('New');
-                /*echo "<pre>";
-                print_r($productRequestModel);
-                die();*/
+        $attributeSetId = $catalogProduct->getResource()->getEntityType()->getDefaultAttributeSetId();
+        $entityTypeId = $catalogProduct->getResource()->getEntityType()->getEntityTypeId();
 
-                $productRequestModel->save();
+        $catalogProduct->setData($vendorProduct);
+        $catalogProduct->setAttributeSetId($attributeSetId);
+        $catalogProduct->setEntityTypeId($entityTypeId);
+        $catalogProduct->setVendorId($vendorId);
+        
+        $catalogProduct->save();
 
-            }
-            Mage::getSingleton('core/session')->addSuccess($this->__('New product has been Approved.'));
-        } catch (Exception $th) {
-            Mage::logException($th);
-            Mage::getSingleton('core/session')->addError($th->getMessage());
+        $productRequest = Mage::getModel('vendor/product_request');
+        $productRequest->setRequestId($this->getRequest()->getParam('id'));
+        $productRequest->setCatalogProductId($catalogProduct->getId());
+        $productRequest->setRequest('1');
+        $productRequest->setApproved(1);
+
+        $productRequest->setRequestApprovedDate(Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s'));
+        $productRequest->save();
+
+        $productRequest->load($productRequest->getRequestId());
+        
+        if($productRequest->getRequestType() == 'delete')
+        {
+            $this->_forward('vendorDelete');
         }
-        $this->_redirect('*/*/');
-   } 
 
-   public function editApproveAction()
-   {
-        $productId = (int) $this->getRequest()->getParam('id');
-        $product = Mage::getModel('vendor/product')
-            ->setStoreId($this->getRequest()->getParam('store',0))
-            ->load($productId);
-            
-            if (!$productId) {
-                if ($setId = (int)$this->getRequest()->getParam('set')) {
-                    Mage::getModel('adminhtml/session')->setId($setId);
-                }
-            }  
-            
-            try {
-                if ($productId && !$product->getId()) {
-                    $this->_getSession->addError('This product no longer exists');
-                    $this->_redirect('*/*/');
-                }
-                $productData = $product->getData();
-                unset($productData['entityId']);
-                unset($productData['entity_Type']);
-                unset($productData['attribute_set_id']);
-                unset($productData['store_id']);
+       Mage::getSingleton('core/session')->addSuccess($this->__('The Product Approved Successfully...'));
+       $this->_redirect('*/*/');
+    }
+    public function unApprovedAction()
+    {
+        $productRequest = Mage::getModel('vendor/product_request');
+        $productRequest->setRequestId($this->getRequest()->getParam('id'));
+        $productRequest->setRequest('1');
+        $productRequest->setApproved(0);
 
-                $productRequestModel = Mage::getResourceModel('vendor/product_request_collection')
-                ->addFieldtoFilter('vendor_id',array('eq',$product->getVendorId()))->load()->getLastItem();
+        $productRequest->setRequestApprovedDate(Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s'));
+        
+        $productRequest->save();
 
-                $catalogProductModel = Mage::getModel('catalog/product');
-                $catalogProductId = $catalogProductModel->getCatalogProductId();
-                
-                if ($catalogProductModel->load($catalogProductId)) {
-                    $catalogProductModel->addData($productData);
-                    $catalogProductModel->save();
-                    $productRequestModel->setRequestType('Edited');
-                    $productRequestModel->setApproveStatus('Approved');
-                    $productRequestModel->setCreatedAt($product->getUpdatedAt());
-                    $productRequestModel->setApproveAt(time());
-                    $productRequestModel->save();
-                    Mage::getSingleton('core/session')->addSuccess($this->__('Edit product Request has been Approved.'));
-                    $this->_redirect('*/*/');
-                }
-            } catch (Exception $e) {
-                Mage::logException($e);
-                Mage::getSingleton('core/session')->addError($e->getMessage());
-                $this->_redirect('*/*/');
-            }
-   }
-
-   public function rejectAction()
-   {
-        $productId = (int) $this->getRequest()->getParam('id');
-        $product = $this->_initProduct();
-        try {
-            if ($productId && !$product->getId()) {
-                $this->_getSession->addError('This product no longer exists');
-                $this->_redirect('*/*/');
-            }
-            $productRequestModel = Mage::getResourceModel('vendor/product_request_collection')
-                ->addFieldtoFilter('product_id',array('eq',$product->getId()))->load()->getLastItem();
-             $productRequestModel->setApproveStatus('Rejected');
-             $productRequestModel->setCreatedAt($product->getCreatedAt());
-             $productRequestModel->setApproveAt(time());
-             $productRequestModel->save();
-             Mage::getSingleton('core/session')->addSuccess($this->__('product has been Rejected.'));
-
-        } catch (Exception $e) {
-            Mage::logException($e);
-                Mage::getSingleton('core/session')->addError($e->getMessage());
-        }
-        $this->_redirect('*/*/');
-   }
+       Mage::getSingleton('core/session')->addNotice($this->__('The Product Un Approved Successfully...'));
+       $this->_redirect('*/*/');
+    }
 
 }

@@ -23,36 +23,16 @@ class Ccc_Vendor_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Block_Widge
 
     protected function _prepareCollection()
     {
-        $collection = Mage::getResourceModel('vendor/product_collection')
-            ->addAttributeToSelect('name')
-            ->addAttributeToSelect('type_id')
-            ->addAttributeToSelect('price')
-            ->addAttributeToSelect('vendor_status')
-            ->addAttributeToSelect('admin_status')
-            ->addAttributeToSelect('vendor_id');
-        $collection->joinAttribute(
-            'id',
-            'vendor_product/entity_id',
-            'entity_id',
-            null,
-            'inner',
-            $storeId
-        );
+        $collection = Mage::getModel('vendor/product_request')->getResourceCollection();
+$collection->getSelect()->join(
+array(
+'vendor_product'=> 'vendor_product_entity'),
+'vendor_product.entity_id = main_table.product_id',
+array('*'));
 
-        $collection->getSelect()->join(
-            array('vendor_product_request' => 'vendor_product_request'),
-            'vendor_product_request.product_id = e.entity_id',
-            array('vendor_product_request.request_type','vendor_product_request.approve_status')
-        );
+$this->setCollection($collection);
 
-
-        $this->setCollection($collection);
-        parent::_prepareCollection();
-        //$this->getCollection();
-        /*echo "<pre>";
-        print_r($collection->getData());
-        die();*/
-        return $this;
+return parent::_prepareCollection();
     }
 
     protected function _prepareColumns()
@@ -110,7 +90,7 @@ class Ccc_Vendor_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Block_Widge
             array(
                 'caption'=>$this->__('Approve'),
                 'url' => array(
-                    'base' => '*/*/newApprove',
+                    'base' => '*/*/approved',
                 ),
                 'field' => 'id',
                 ),
@@ -129,7 +109,7 @@ class Ccc_Vendor_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Block_Widge
                     array(
                         'caption'=>$this->__('Reject'),
                         'url' => array(
-                            'base' => '*/*/reject', 
+                            'base' => '*/*/unApproved', 
                         ),
                         'field' => 'id',
                     ),

@@ -100,14 +100,28 @@ class Ccc_Vendor_Product_GroupController extends Mage_Core_Controller_Front_Acti
 
     public function deleteAction() {
         try {
-            $groupId = $this->getRequest()->getParam('group_id');
-            $model = Mage::getModel('eav/entity_attribute_group')->load($groupId)->delete();
-            $groupModel = Mage::getModel('vendor/product_attribute_group')->load($groupId, 'attribute_group_id')->delete();
-            Mage::getSingleton('vendor/session')->addSuccess(Mage::helper('vendor')->__('Group has been deleted successfully.'));
+            $modelGroup = Mage::getModel('vendor/product_attribute_group');
+           
+            if (!($Id = (int) $this->getRequest()->getParam('group_id')))
+                throw new Exception('Id not found');
+
+            if (!$modelGroup->load($Id)) {
+                throw new Exception('product does not exist');
+            }
+
+            if (!$modelGroup->delete()) {
+                throw new Exception('Error in delete record');
+            } 
+            Mage::getSingleton('vendor/session')->addSuccess(Mage::helper('vendor')->__('Group Deleted successfully.'));                
+
         } catch (Exception $e) {
-            Mage::getSingleton('vendor/session')->addError(Mage::helper('vendor')->__('An error occurred while deleting this group.'));
+            /*echo "<pre>";
+            print_r($e);
+            die;*/
+            Mage::getSingleton('vendor/session')->addError(Mage::helper('vendor')->__('An error occuring while Delete.'));
+
         }
-        $this->_redirect('*/*/');
         
+        $this->_redirect('*/*/');
     }
 }
