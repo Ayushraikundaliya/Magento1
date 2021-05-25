@@ -9,7 +9,9 @@ class Ccc_Vendor_ProductController extends Mage_Core_Controller_Front_Action
     protected function _initProduct()
     {
         $productId = (int) $this->getRequest()->getParam('id');
-        $product = Mage::getModel('vendor/product')->setStoreId($this->getRequest()->getParam('store',0));
+        $product = Mage::getModel('vendor/product')
+        ->setStoreId($this->getRequest()->getParam('store',0));
+        
 
         if (!$productId) {
             if ($setId = $this->getRequest()->getParam('set')) {
@@ -27,6 +29,7 @@ class Ccc_Vendor_ProductController extends Mage_Core_Controller_Front_Action
     public function indexAction()
     {
        $this->loadLayout();
+       $this->_title('Vendor Product Grid');
        $this->_initLayoutMessages('vendor/session');
        $this->renderLayout();
     }
@@ -51,6 +54,7 @@ class Ccc_Vendor_ProductController extends Mage_Core_Controller_Front_Action
        }
        
        $this->loadLayout();
+       $this->_title('Vendor Product Edit');
        $this->_initLayoutMessages('vendor/session');
        $this->renderLayout();
     }
@@ -62,9 +66,9 @@ class Ccc_Vendor_ProductController extends Mage_Core_Controller_Front_Action
                 throw new Exception("Error Processing Request");
                 
             }
-            $productId = $this->getRequest()->getParam('entity_id');
-            $vendorId = $this->_getSession()->getVendor()->getId();
+            $productId = $this->getRequest()->getParam('id');
             $productData = $this->getRequest()->getPost();
+            
             $product = Mage::getSingleton('vendor/product');
             $sku = $this->getRequest()->getPost('sku');
             $skuflag = 1;
@@ -93,6 +97,7 @@ class Ccc_Vendor_ProductController extends Mage_Core_Controller_Front_Action
                     throw new Exception("Product sku Already exist.");
                 }
             }
+
             if (!$productId) {
                 $entityTypeId = $product->getResource()->getEntityType()->getEntityTypeId();
                 $attributeSetId = $product->getResource()->getEntityType()->getDefaultAttributeSetId();
@@ -104,18 +109,12 @@ class Ccc_Vendor_ProductController extends Mage_Core_Controller_Front_Action
             }
             $product->addData($productData);
             $product = $product->save();
-            /*echo "<pre>";
-            print_r($product->getId());
-            die();*/
 
             if ($product) {
                 if (!$productId) {
                     $productRequestModel = Mage::getModel('vendor/product_request');
                     $productRequestModel->setVendorId($product->getVendorId());
                     $productRequestModel->setProductId($product->getId());
-                    /*echo "<pre>";
-                    print_r($productRequestModel);
-                    die();*/
                     $productRequestModel->setRequestType('New');
                     $productRequestModel->setApproveStatus('Pending');
                     $productRequestModel->setCreatedAt(time());
@@ -124,29 +123,24 @@ class Ccc_Vendor_ProductController extends Mage_Core_Controller_Front_Action
                     $productRequestModel = Mage::getResourceModel('vendor/product_request_collection')
                         ->addFieldToFilter('product_id',array('eq',$product->getId()))->load()->getLastItem();
                     $productRequestModel->setVendorId($this->_getSession()->getId());
-                    $productRequestModel->setProductId($product->getId());   
+                    $productRequestModel->setProductId($product->getId());    
                     $productRequestModel->setRequestType('Edited');
                     $productRequestModel->setApproveStatus('Pending');
                     $productRequestModel->setCreatedAt($product->getCreatedAt());
-                    /*echo "<pre>";
-                    print_r($productRequestModel);
-                    die();*/
+                    
                     $productRequestModel->save();
                 }
                 
             }
             $this->_getSession()->addSuccess('Request send for this product.');
         } catch (Exception $th) {
-            echo "<pre>";
-            print_r($th);
-            die();
-            Mage::getSingleton('core/session')->addError($this->__('Error in processing'));
+            
+            Mage::getSingleton('core/session')->addError($this->__($th));
             $this->_redirect('*/*/');
             return;
         }
         $this->_redirect('*/*/index');
     }
-
 
     public function deleteAction()
     {
@@ -181,7 +175,7 @@ class Ccc_Vendor_ProductController extends Mage_Core_Controller_Front_Action
             } */
         } catch (Exception $e) {
             Mage::logException($e);
-            Mage::getSingleton('core/session')->addError($e->getMessage());
+            $Mage::getSingleton('core/session')->addError($e->getMessage());
         }
         
         $this->_redirect('*/*/');
