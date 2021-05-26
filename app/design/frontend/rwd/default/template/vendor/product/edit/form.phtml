@@ -38,11 +38,22 @@
                 }
             }
         });
+        jQuery("input").each(function() {
+        if (jQuery(this).attr("type") == 'number') {
+            if (jQuery(this).val() < 0) {
+            ptag = jQuery(this).parent().prev();
+            alert(jQuery(ptag).text().trim() + " Value must be positive value ");
+            flag = 1;
+            return false;
+            }
+            }
+        });
         if (flag) {
             return false;
         } else {
             jQuery("#product").submit();
         }
+
     }
     //document.getElementById('errorHeader').innerText = 'Jay';
     var base = new Base();

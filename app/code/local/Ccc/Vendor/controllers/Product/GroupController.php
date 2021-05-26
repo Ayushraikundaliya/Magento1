@@ -99,21 +99,40 @@ class Ccc_Vendor_Product_GroupController extends Mage_Core_Controller_Front_Acti
     }
 
     public function deleteAction()
-    {
-        if ($id = $this->getRequest()->getParam('id')) {
-            $model = Mage::getModel('eav/entity_attribute_group');
-            $model->load($id);
-            try 
-            {
-                $model->delete();
-                Mage::getSingleton('vendor/session')->addSuccess(
-                    Mage::helper('vendor')->__('Group Deleted....'));
-                $this->_redirect('*/*/');
-            } catch (Exception $e) {
-                Mage::getSingleton('vendor/session')->addError($e->getMessage());
-                $this->_redirect('*/*/');
-            }
-        }
-        $this->_redirect('*/*/');
-    }
+{
+try {
+$modelGroup = Mage::getModel('vendor/product_attribute_group');
+$model = Mage::getModel('eav/entity_attribute_group');
+
+if (!($Id = (int) $this->getRequest()->getParam('group_id')))
+throw new Exception('Id not found');
+
+if (!$modelGroup->load($Id)) {
+throw new Exception('product does not exist');
+}
+/* echo "<pre>";
+$abc = $model->load($modelGroup->getAttributeGroupId());
+print_r($abc);
+
+die; */
+$model->load($modelGroup->getAttributeGroupId());
+
+if (!$modelGroup->delete() ) {
+throw new Exception('Error in delete record');
+}
+if (!$model->delete()) {
+throw new Exception('Error in delete record');
+}
+Mage::getSingleton('vendor/session')->addSuccess(Mage::helper('vendor')->__('Group Deleted successfully.'));
+
+} catch (Exception $e) {
+echo "<pre>";
+print_r($e);
+die;
+Mage::getSingleton('vendor/session')->addError(Mage::helper('vendor')->__('An error occuring while Delete.'));
+
+}
+
+$this->_redirect('*/*/');
+}
 }
