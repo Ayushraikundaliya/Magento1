@@ -1,0 +1,57 @@
+<?php
+    $products = $this->getProducts();
+?>
+<div class="products">
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <div class="form-buttons">
+        <button type="button" onclick="redirectUrl('<?php echo $this->getUrl('*/order/addProduct',array('_current' => true)); ?>')"><span>Add Products</span></button>
+            
+        </div>
+        <h4 class="icon-head head-cart">Product List</h4>
+    </div>
+    
+    <div class="grid" id="order-items_grid">
+        <table cellspacing="0" class="data order-tables">
+            <colgroup><col>
+            <col width="0">
+            <col width="100">
+            <col width="40">
+            <col width="100">
+            <col width="80">
+            <col width="100">
+            <col width="80">
+            </colgroup><thead>
+                <tr class="headings">
+                    <th class="no-link">Id</th>
+                    <th class="no-link">Product Name</th>
+                    <th class="no-link">Price</th>
+                    <th class="no-link">Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($products as $key => $product) : ?>
+                    <tr title="#">
+                        <td class=" "><?php echo $product['entity_id']; ?></td>
+                        <td class=" "><?php echo $product['name']; ?></td>
+                        <td class="a-center"><?php echo $product['price']; ?></td>
+                        <td class="a-center ">
+                            <input type="checkbox" name="id[]" value="<?php echo $product['entity_id']; ?>" class="checkbox" />
+                        </td> 
+                    </tr>
+                <?php endforeach; ?>
+        </tbody>
+        </table>
+    </div>
+</div>
+</div>
+<script language="javascript">
+    function enableDisable(bEnable, textBoxID)
+    {
+         document.getElementById(textBoxID).disabled = !bEnable
+         //alert(111);
+    }
+    function abc() {
+        alert(11);
+    }
+</script>

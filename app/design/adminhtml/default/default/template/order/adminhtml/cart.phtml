@@ -1,0 +1,75 @@
+<?php 
+ /* echo "<pre>";
+       print_r($this->getPayment()); 
+       die;  */ 
+?>
+<form id="grid" method="POST" action="<?php echo $this->getUrl('*/*/grid'); ?>">
+    <?php echo $this->getBlockHtml('formkey'); ?>
+
+    <div class="entry-edit" id="products">
+        <?php echo $this->getChildHtml('product'); ?>   
+    </div>
+
+    <br>
+
+    <div class="entry-edit">
+        <?php echo $this->getChildHtml('item'); ?>   
+    </div>
+    
+    <br>
+
+    <div class="entry-edit">
+        <div class="entry-edit-head"><h4>Customer Address</h4></div>
+            <fieldset class="a-center bold">
+            <span class="nowrap">
+            <center>
+                <table width="80%" class="table-class">
+                    <tr>
+                        <td><?php echo $this->getChildHtml('billing'); ?></td>
+                        <td width="10%"></td>
+                        <td><?php echo $this->getChildHtml('shipping'); ?></td>
+                    </tr>
+                </table> 
+            </center>     
+            </span>
+        </fieldset>
+    </div>
+
+    <br>
+
+    <div class="entry-edit">
+        <div class="entry-edit-head"><h4>Payment & Shipping Method</h4></div>
+            <fieldset class="a-center bold">
+            <span class="nowrap">
+            <center>
+                <table width="80%" class="table-class">
+                    <tr>
+                        <td><?php echo $this->getChildHtml('paymentmethod'); ?></td>
+                        <td width="10%"></td>
+                        <td><?php echo $this->getChildHtml('shippingmethod'); ?></td>
+                    </tr>
+                </table> 
+            </center>     
+            </span>
+        </fieldset>
+    </div>
+
+    <div class="entry-edit">
+        <?php echo $this->getChildHtml('total'); ?>   
+    </div>
+</form>
+
+<script type="text/javascript">
+    document.getElementById('products').style.display = "none";
+
+    function showProduct() {
+        document.getElementById('products').style.display = "block";
+        localStorage.setItem('active',1);
+    }
+
+    function redirectUrl(value) {
+        form = document.getElementById('grid');
+        form.action = value;
+        form.submit();
+    }
+</script>

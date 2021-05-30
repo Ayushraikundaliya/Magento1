@@ -1,0 +1,62 @@
+<?php $collection = $this->getCollection(); ?>
+
+<div id="order-items">
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-cart">Items Ordered</h4>
+            <div class="form-buttons">
+                <button id="submit_order_top_button" type="button" onclick="redirectUrl('<?php echo $this->getUpdateUrl() ?>');" class="scalable save">
+                    <span><span><span>Update</span></span></span>
+                </button>
+                <button id="submit_order_top_button" type="button" onclick="showProduct();" class="scalable add">
+                    <span><span><span>Add Product</span></span></span>
+                </button>
+            </div>
+        </div>
+        <div class="grid" id="order-items_grid">
+            <table cellspacing="0" class="data order-tables">
+                <col />
+                <col width="100" />
+                <col width="40" />
+                <col width="100" />
+                <col width="80" />
+                <col width="100" />
+                <col width="80" />
+                <thead>
+                    <tr class="headings">
+                        <th class="no-link">Product Name</th>
+                        <th class="no-link">SKU</th>
+                        <th class="no-link">Product Id</th>
+                        <th class="no-link">Quantity</th>
+                        <th class="no-link">Base Price</th>
+                        <th class="no-link">Price</th>
+                        <th class="no-link last">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if ($collection->count()) : ?>
+                        <?php foreach ($collection->getItems() as $key => $item) : ?>
+                            <tr class="even">
+                                <td><?php echo $item->getProduct()->getName(); ?></td>
+                                <td><?php echo $item->getProduct()->getSku(); ?></td>
+                                <td><?php echo $item->getProductId(); ?></td>
+                                <td><input type="number" name="quantity[<?php echo $item->getItemId(); ?>]" value="<?php echo $item->getQuantity(); ?>"></td>
+                                <td><?php echo $item->getBasePrice(); ?></td>
+                                <td><?php echo $item->getPrice(); ?></td>
+                                <td>
+                                    <button type="button" onclick="redirectUrl('<?php echo $this->getDeleteItemUrl($item->getCartItemId()) ?>');" class="scalable delete">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <tr class="even">
+                            <td class="empty-text a-center" colspan="100">No ordered items</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

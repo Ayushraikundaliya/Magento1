@@ -1,0 +1,56 @@
+<?php $address = $this->getShippingAddress(); ?>
+<div class="entry-edit" style="position: relative;">
+
+    <div class="entry-edit-head">
+        <h4 class="icon-head fieldset-legend head-shipping-address">Shipping Address</h4>
+        <div class="form-buttons">
+                <button id="submit_order_top_button" type="button" onclick="return validate('<?php echo $this->getShippingMethodUrl() ?>','s');" class="scalable save">
+                    <span><span><span>Save</span></span></span>
+                </button>
+            </div>
+     </div>
+
+    <fieldset class="np">
+    <div class="order-address" id="order-shipping_address_fields">
+        <div class="content">
+                <div class="hor-scroll">
+                        <table cellspacing="0" class="form-list">
+            <tbody>
+<tr>
+        <td class="label"><label for="order-shipping_address_firstname">First Name <span class="required">*</span></label></td>
+    <td class="value">
+                                        <input id="first_name" name="shipping[first_name]" value="<?php echo $address->getFirstName(); ?>" class="input-text required-entry" type="text" />
+                                    </td>
+<tr>
+        <td class="label"><label for="order-shipping_address_lastname">Last Name <span class="required">*</span></label></td>
+    <td class="value">
+        <input id="order-shipping_address_lastname" name="order[shipping_address][lastname]" value="" class=" required-entry input-text required-entry" type="text" disabled="">            </td>
+    </tr>
+<tr>
+        <td class="label"><label for="order-shipping_address_street0">Street Address <span class="required">*</span></label></td>
+    <td class="value">
+        <div class="multi-input"><input id="order-shipping_address_street0" name="order[shipping_address][street][0]" value="" class="input-text required-entry" type="text" disabled="">
+</div>          </td>
+    </tr>
+<tr>
+        <td class="label"><label for="order-shipping_address_city">City <span class="required">*</span></label></td>
+    <td class="value">
+        <input id="order-shipping_address_city" name="order[shipping_address][city]" value="" class=" required-entry input-text required-entry" type="text" disabled="">            </td>
+    </tr>
+<tr>
+        <td class="label"><label for="order-shipping_address_postcode">Zip/Postal Code <span class="required">*</span></label></td>
+    <td class="value">
+        <input id="order-shipping_address_postcode" name="order[shipping_address][postcode]" value="" class=" required-entry input-text required-entry" type="text" disabled="">            </td>
+    </tr>
+<tr>
+        <td class="label"><label for="order-shipping_address_telephone">Telephone <span class="required">*</span></label></td>
+    <td class="value">
+        <input id="order-shipping_address_telephone" name="order[shipping_address][telephone]" value="" class=" required-entry input-text required-entry" type="text" disabled="">            </td>
+    </tr>
+            </tbody>
+        </table>
+            </div>
+            </div>
+    </div>
+    </fieldset>
+</div>

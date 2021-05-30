@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Ccc_Order>
+			<version>1.0.1</version>
+		</Ccc_Order>
+	</modules>
+
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<ccc_order>Ccc_Order_Adminhtml</ccc_order>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+
+	<adminhtml>
+		<layout>
+			<updates>
+				<order>
+					<file>order.xml</file>
+				</order>
+			</updates>
+		</layout>
+	</adminhtml>
+
+	<global>
+		<helpers>
+			<order>
+				<class>Ccc_Order_Helper</class>
+			</order>
+		</helpers>
+
+		<blocks>
+			<order>
+				<class>Ccc_Order_Block</class>
+			</order>
+		</blocks>
+
+		<models>
+			<order>
+				<class>Ccc_Order_Model</class>
+				<resourceModel>order_resource</resourceModel>
+			</order>
+			<order_resource>
+				<class>Ccc_Order_Model_Resource</class>
+				<entities>
+					<order>
+						<table>ccc_order</table>
+					</order>
+					<order_address>
+						<table>ccc_order_address</table>
+					</order_address>
+					<order_item>
+						<table>ccc_order_item</table>
+					</order_item>
+					<cart>
+						<table>ccc_cart</table>
+					</cart>
+					<cart_address>
+						<table>ccc_cart_address</table>
+					</cart_address>
+					<cart_item>
+						<table>ccc_cart_item</table>
+					</cart_item>
+				</entities>
+			</order_resource>
+		</models>
+
+		<resources>
+			<order_setup>
+				<setup>
+					<module>Ccc_Order</module>
+					<class>Ccc_Order_Model_Resource_Setup</class>
+				</setup>
+			</order_setup>
+		</resources>
+	</global>
+</config>
