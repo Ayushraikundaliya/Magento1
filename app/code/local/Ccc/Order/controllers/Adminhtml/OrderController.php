@@ -89,14 +89,14 @@ class Ccc_Order_Adminhtml_OrderController extends Mage_Adminhtml_Controller_Acti
             $this->_redirect('*/*/new');
             return;
         }
-        foreach($increase as $itemId => $quantity){
+        foreach($increase as $itemId => $quantity) {
             $model = Mage::getModel('order/cart_item')->load($itemId);
-            if(!is_numeric($quantity) || $quantity<0){
+            if(!is_numeric($quantity) || $quantity < 0){
                 Mage::getSingleton('adminhtml/session')->addError('Keep quantity more than 0!');
                 $this->_redirect('*/order/new');
                 return;
             }
-            if($quantity==0){
+            if($quantity==0) {
                 $model->delete();
                 continue;
             }
@@ -127,6 +127,39 @@ class Ccc_Order_Adminhtml_OrderController extends Mage_Adminhtml_Controller_Acti
             return;
         }
         Mage::getSingleton('adminhtml/session')->addSuccess('Product Deleted Successfully');
+        $this->_redirect('*/order/new');
+    }
+
+    public function saveBillingAddressAction() {
+        $cart = $this->_getCart();
+        $billingAddress = $this->getRequest()->getPost('billing'); 
+        $cartAddressModel = Mage::getModel('order/cart_address');
+        $saveInAddressBook = $this->getRequest()->getPost('billingSaveAddressBook');
+
+        $cartBillingAddress = $cart->getCartBillingAddress();
+        
+        if($cartBillingAddress->getId()) {
+            $cartAddressModel = $model->load($cartBillingAddress->getAddressId());
+            $cartAddressModel->addData($billingAddress);
+        }else{
+            $cartAddressModel->addData($billingAddress);
+            $cartAddressModel->setAddressType('billing');
+            $cartAddressModel->setCreatedData(date('Y-m-d h:i:s'));
+            $cartAddressModel->setCartId($cart->getId());
+        }
+        $cartAddressModel->save();
+        
+        if ($saveInAddressBook) {
+            $customerBillingAddress = $cart->getCustomer()->getBillingAddress();
+            $customerBillingAddress->setStreet($billingAddress['address']);
+            $customerBillingAddress->setCountryId($billingAddress['country']);
+            $customerBillingAddress->setRegion($billingAddress['state']);
+            $customerBillingAddress->setPostcode($billingAddress['zipcode']);
+            $customerBillingAddress->setTelephone($billingAddress['phone']);
+            $customerBillingAddress->setCity($billingAddress['city']);
+            $customerBillingAddress->save();
+        }
+        
         $this->_redirect('*/order/new');
     }
 } 

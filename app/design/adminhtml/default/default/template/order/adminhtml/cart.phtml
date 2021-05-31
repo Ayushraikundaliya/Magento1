@@ -6,6 +6,10 @@
 <form id="grid" method="POST" action="<?php echo $this->getUrl('*/*/grid'); ?>">
     <?php echo $this->getBlockHtml('formkey'); ?>
 
+    <div class="entry-edit">
+        <?php echo $this->getChild('customer')->setCart($this->getCart())->toHtml(); ?>   
+    </div>
+
     <div class="entry-edit" id="products">
         <?php echo $this->getChildHtml('product'); ?>   
     </div>
@@ -71,5 +75,29 @@
         form = document.getElementById('grid');
         form.action = value;
         form.submit();
+    }
+    function validate(url,method = ''){
+        tbodys = document.getElementById('shipping').children[0];
+        tbodyb = document.getElementById('billing').children[0];
+        checkbox = document.getElementById('sameAsBillingcheck').checked;
+        if(!checkbox){
+            if(method == 's' || method==''){
+                for(i=0;i<7;i++){
+                    if(tbodys.children[i].children[1].children[0].value == ''){
+                        alert("Please Fill All The Field of Shipping Address");
+                        return false;
+                    }
+                }
+            }
+        }
+        if(method == 'b' || method==''){
+            for(i=0;i<7;i++){
+                if(tbodyb.children[i].children[1].children[0].value == ''){
+                    alert("Please Fill All The Field Of Billing Address");
+                    return false;
+                }
+            }
+        }
+        redirectUrl(url);
     }
 </script>

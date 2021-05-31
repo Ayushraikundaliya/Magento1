@@ -2,23 +2,27 @@
 
 class Ccc_Order_Model_Customer extends Mage_Customer_Model_Customer {
 
-    protected $customerBillingAddress = null;
+    protected $billingAddress = null;
     protected $customerShippingAddress = null;
 
-    public function getCustomerBillingAddress() {    
-        if(!$this->getId()){
+    public function setBillingAddress(Mage_Customer_Model_Address $billingAddress) {
+        $this->billingAddress = $billingAddress;
+        return $this;
+    }
+
+    public function getBillingAddress()
+    {
+        if ($this->billingAddress) {
+            return $this->billingAddress;
+        }
+        if (!$this->getId()) {
             return false;
         }
-        if(!$this->customerBillingAddress){
-            $this->setCustomerBillingAddress();
-        }
-        return $this->customerBillingAddress;
-    }
-    public function setCustomerBillingAddress() {
-        $addressId = $this->getResource()->getAttribute('default_billing')->getFrontend()->getValue($this);
-        $address =  Mage::getModel('customer/address')->load($addressId);
-        $this->customerBillingAddress = $address;
-        return $this;
+        $addressId  = $this->getResource()->getAttribute('default_billing')
+            ->getFrontend()->getValue($this);
+        
+        $address = Mage::getModel('customer/address')->load($addressId);
+        return $address;    
     }
 
     public function getCustomerShippingAddress() {  

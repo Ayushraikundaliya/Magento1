@@ -1,41 +1,41 @@
 <?php
 
-class Ccc_Order_Block_Adminhtml_Order_Cart_Shipping extends Ccc_Order_Block_Adminhtml_Order_Cart {
-    public function __construct() {
-    	parent::__construct();
-        $this->_blockGroup = 'order';
-        $this->_controller = 'adminhtml_order_cart_shipping';
-    }
+class Ccc_Order_Block_Adminhtml_Order_Cart_Shipping extends Mage_Core_Block_Template {
+    protected $cart = null;
 
-    public function getShippingAddress() {
-        $cart = $this->getCart();
-        if($cart->getCartShippingAddress()->getId()){
-            return $cart->getCartShippingAddress();
-        }
-        /*echo "<pre>";
-        print_r($cart->getCustomer());
-        die();*/
-        if($cart->getCustomer()->getCustomerShippingAddress()/*->getId()*/){
-            $address = $cart->getCustomer()->getCustomerShippingAddress();
-            $address->setCountry($address->getCountryId());
-            $address->setAddress($address->getStreet());
-            $address->setState($address->getRegion());
-            $address->setZipcode($address->getPostcode());
-            $address->setFirstName($address->getFirstname());
-            $address->setLastName($address->getLastname());
+    public function getShippingAddress() { 
+        $address = $this->getCart()->getCartShippingAddress();
+        if ($address->getId()) {
             return $address;
         }
-        return Mage::getModel('order/cart_address');
-    }
-
-    public function getValue($address, $value) {
-        if(array_key_exists($value,$address)){
-            return $address[$value];
+        $customerAddress = $this->getCart()->getCustomer()->getDefaultShippingAddress();
+        if ($customerAddress == NULL) {
+           return $address;
         }
-        return false;
+        return $customerAddress;
     }
 
-    public function getShippingMethodUrl() {
-        return $this->getUrl('*/*/shipping',array('_current'=>true));
+    public function getCart() {
+        if(!$this->cart) {
+            $this->setCart();
+        }
+        return $this->cart; 
     }
+
+    public function setCart() {
+        $this->cart = Mage::registry('cart');
+        return $this;
+    }
+
+
+    public function getSameAsBilling() {
+        if ($this->getCart()->getShippingAddress()->getId()) {
+            return null;
+        }
+       $billing = $this->getCart()->getBillingAddress();
+        if ($billing->same_as_billing) {
+            return $billing->getSameAsBilling();
+        }
+    }
+
 }

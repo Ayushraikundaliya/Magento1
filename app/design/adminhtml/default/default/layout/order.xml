@@ -18,43 +18,13 @@
                 <block type="order/adminhtml_order_cart_product" name="product" template="order/adminhtml/cart/product.phtml"/>
                 <block type="order/adminhtml_order_cart_billing" template="order/adminhtml/cart/billing.phtml" name="billing"></block>
                 <block type="order/adminhtml_order_cart_shipping" template="order/adminhtml/cart/shipping.phtml" name="shipping"></block>
+                <block type="order/adminhtml_order_cart_paymentmethod" name="paymentmethod" template="order/adminhtml/cart/paymentmethod.phtml"/>
+                <block type="order/adminhtml_order_cart_shippingmethod" name="shippingmethod" template="order/adminhtml/cart/shippingmethod.phtml"/>
+                <block type="order/adminhtml_order_cart_customer" name="customer" template="order/adminhtml/cart/customer.phtml"/>
+                <block type="order/adminhtml_order_cart_total" name="total" template="order/adminhtml/cart/total.phtml"/>
             </block>
         </reference>
     </adminhtml_order_new>
-    <!-- <adminhtml_order_create_cart>
-    	<reference name="content">
-    		<block type="order/adminhtml_cart" name="cart" template="order/adminhtml/cart.phtml">
-    			<block type="order/adminhtml_cart_product" name="product" template="order/adminhtml/cart/product.phtml"/>
-    			<block type="order/adminhtml_cart_item" name="item" template="order/adminhtml/cart/item.phtml"/>
-    			<block type="order/adminhtml_cart_billing" name="billing" template="order/adminhtml/cart/billing.phtml"/>
-    			<block type="order/adminhtml_cart_shipping" name="shipping" template="order/adminhtml/cart/shipping.phtml"/>
-    			<block type="order/adminhtml_cart_paymentmethod" name="paymentmethod" template="order/adminhtml/cart/paymentmethod.phtml"/>
-    			<block type="order/adminhtml_cart_shippingmethod" name="shippingmethod" template="order/adminhtml/cart/shippingmethod.phtml"/>
-    			<block type="order/adminhtml_cart_total" name="total" template="order/adminhtml/cart/total.phtml"/>
-    		</block>
-    	</reference>
-    </adminhtml_order_create_cart>
+    
 
-    <adminhtml_cart_index>
-        <reference name="content">
-            <block type="order/adminhtml_cart_index" name="cart" template="order/adminhtml/cart/index.phtml">
-                <block type="order/adminhtml_cart_index_customer" name="customer" template="order/adminhtml/cart/index/customer.phtml"/>
-                <block type="order/adminhtml_cart_index_product" name="product" template="order/adminhtml/cart/index/product.phtml"/>
-                <block type="order/adminhtml_cart_index_item" name="item" template="order/adminhtml/cart/index/item.phtml"/>
-                <block type="order/adminhtml_cart_index_billing" name="billing" template="order/adminhtml/cart/index/billing.phtml"/>
-                <block type="order/adminhtml_cart_index_shipping" name="shipping" template="order/adminhtml/cart/index/shipping.phtml"/>
-                <block type="order/adminhtml_cart_index_paymentmethod" name="paymentmethod" template="order/adminhtml/cart/index/paymentmethod.phtml"/>
-                <block type="order/adminhtml_cart_index_shippingmethod" name="shippingmethod" template="order/adminhtml/cart/index/shippingmethod.phtml"/>
-                <block type="order/adminhtml_cart_index_total" name="total" template="order/adminhtml/cart/index/total.phtml"/>
-            </block>
-        </reference>
-    </adminhtml_cart_index> -->
-
-
-
-     <!-- <adminhtml_order_create_load_block_header>
-        <reference name="content">
-            <block type="order/order_create_header" name="header" />
-        </reference>
-    </adminhtml_order_create_load_block_header> -->
 </layout>
