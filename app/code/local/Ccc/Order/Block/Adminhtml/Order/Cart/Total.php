@@ -13,7 +13,7 @@ class Ccc_Order_Block_Adminhtml_Order_Cart_Total extends Ccc_Order_Block_Adminht
         return $this->getCart()->getShippingAmount();
     }
 
-    public function getFinalTotal() {
+    public function getTotal() {
         return $this->getCart()->getFinalTotal();
     }
 

@@ -40,7 +40,7 @@
                                 <td><?php echo $item->getProduct()->getName(); ?></td>
                                 <td><?php echo $item->getProduct()->getSku(); ?></td>
                                 <td><?php echo $item->getProductId(); ?></td>
-                                <td><input type="number" name="quantity[<?php echo $item->getItemId(); ?>]" value="<?php echo $item->getQuantity(); ?>"></td>
+                                <td><input type="number" name="quantity[<?= $item['cart_item_id']?>]" value="<?= $item['quantity']?>"></td>
                                 <td><?php echo $item->getBasePrice(); ?></td>
                                 <td><?php echo $item->getPrice(); ?></td>
                                 <td>

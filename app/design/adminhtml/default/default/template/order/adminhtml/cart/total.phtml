@@ -6,29 +6,27 @@
     <td style="" class="a-right" colspan="1">
         Subtotal    </td>
     <td style="" class="a-right">
-        <span class="price">$0.00</span>    </td>
+        <span class="price"><?php echo $this->getSubTotal(); ?></span>    </td>
 </tr>
+<tr>
+                    <td class="a-right" colspan="1">Shipping</td>
+                    <td class="a-right"><span class="price">$ <?php echo $this->getShippingAmount(); ?></span></td>
+                </tr>
         <tr>
     <td style="" class="a-right" colspan="1">
         <strong>Grand Total</strong>
     </td>
     <td style="" class="a-right">
-        <strong><span class="price">$0.00</span></strong>
+        <strong><span class="price"><?php echo $this->getTotal(); ?></span></strong>
     </td>
 </tr>
     </tbody>
 </table>
 <div class="divider"></div>
 <div class="order-totals-bottom">
-    <p>
-        <label for="notify_customer" class="normal">Append Comments</label>
-        <input type="checkbox" id="notify_customer" name="order[comment][customer_note_notify]" value="1">
-    </p>
-        <p>
-        <label for="send_confirmation" class="normal">Email Order Confirmation</label>
-        <input type="checkbox" id="send_confirmation" name="order[send_confirmation]" value="1" checked="checked">
-    </p>
-        <p><button id="id_ee577e2e50d6bab94846110ecb1208aa" title="Submit Order" type="button" class="scalable save" onclick="order.submit()" style=""><span><span><span>Submit Order</span></span></span></button></p>
+        <p><button id="submit_order_top_button" type="button" onclick="redirectUrl('<?php echo $this->getSaveUrl() ?>');" class="scalable save">
+                    <span><span><span>Submit Order</span></span></span>
+                </button></p>
 </div>
 
 

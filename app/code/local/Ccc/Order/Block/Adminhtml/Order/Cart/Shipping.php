@@ -1,6 +1,6 @@
 <?php
 
-class Ccc_Order_Block_Adminhtml_Order_Cart_Shipping extends Mage_Core_Block_Template {
+class Ccc_Order_Block_Adminhtml_Order_Cart_Shipping extends Ccc_Order_Block_Adminhtml_Order_Cart {
     protected $cart = null;
 
     public function getShippingAddress() { 
@@ -14,19 +14,6 @@ class Ccc_Order_Block_Adminhtml_Order_Cart_Shipping extends Mage_Core_Block_Temp
         }
         return $customerAddress;
     }
-
-    public function getCart() {
-        if(!$this->cart) {
-            $this->setCart();
-        }
-        return $this->cart; 
-    }
-
-    public function setCart() {
-        $this->cart = Mage::registry('cart');
-        return $this;
-    }
-
 
     public function getSameAsBilling() {
         if ($this->getCart()->getShippingAddress()->getId()) {

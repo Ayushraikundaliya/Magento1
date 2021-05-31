@@ -83,29 +83,19 @@ class Ccc_Order_Adminhtml_OrderController extends Mage_Adminhtml_Controller_Acti
     }
 
     public function quantityAction() {
-    	$increase = $this->getRequest()->getPost('quantity');
-        if(!$increase){
-            Mage::getSingleton('adminhtml/session')->addError('No Item added');
-            $this->_redirect('*/*/new');
-            return;
-        }
-        foreach($increase as $itemId => $quantity) {
-            $model = Mage::getModel('order/cart_item')->load($itemId);
-            if(!is_numeric($quantity) || $quantity < 0){
-                Mage::getSingleton('adminhtml/session')->addError('Keep quantity more than 0!');
+    	$qtyItems = $this->getRequest()->getPost('quantity');           
+        foreach ($qtyItems as $cartItemId => $quantity) {
+            if(!is_numeric($quantity) || $quantity<0){
+                Mage::getSingleton('adminhtml/session')->addError('Invalid Quantity');
                 $this->_redirect('*/order/new');
                 return;
             }
-            if($quantity==0) {
-                $model->delete();
-                continue;
-            }
-            $model->setQuantity($quantity);
-            $price = $this->price($model->getBasePrice(), $quantity);
-            $model->setPrice($price);
-            $model->save();
+            $cartItem = Mage::getModel('order/cart_item')->load($cartItemId);
+            $cartItem->quantity = $quantity; 
+            $price = $this->price($cartItem->getBasePrice(), $quantity); 
+            $cartItem->setPrice($price);  
+            $cartItem->save();
         }
-        Mage::getSingleton('adminhtml/session')->addSuccess('Quantity Updated');
         $this->_redirect('*/order/new');
     }
 
@@ -160,6 +150,24 @@ class Ccc_Order_Adminhtml_OrderController extends Mage_Adminhtml_Controller_Acti
             $customerBillingAddress->save();
         }
         
+        $this->_redirect('*/order/new');
+    }
+
+    public function paymentMethodAction(){
+        $billingMethod = $this->getRequest()->getPost('paymentMethod');
+        $cart = $this->_getCart();
+        $cart-> payment_method_code = $billingMethod;
+        $cart->save();
+        $this->_redirect('*/order/new');
+    }
+
+    public function shippingMethodAction(){
+        $shppingData = $this->getRequest()->getPost('shippingMethod');
+        $shppingData = explode('=>',$shppingData);
+        $cart = $this->_getCart();
+        $cart->setShippingMethodCode($shppingData[0]);
+        $cart->setShippingAmount($shppingData[1]); 
+        $cart->save();
         $this->_redirect('*/order/new');
     }
 } 

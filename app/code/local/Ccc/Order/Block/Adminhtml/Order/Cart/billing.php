@@ -1,9 +1,8 @@
 <?php
 
-class Ccc_Order_Block_Adminhtml_Order_Cart_Billing extends Mage_Core_Block_Template {
+class Ccc_Order_Block_Adminhtml_Order_Cart_Billing extends Ccc_Order_Block_Adminhtml_Order_Cart {
     protected $cart = null;
-    public function getBillingAddress()
-    { 
+    public function getBillingAddress() { 
         $address = $this->getCart()->getCartBillingAddress();
         if ($address->getId()) {
             return $address;
@@ -13,17 +12,5 @@ class Ccc_Order_Block_Adminhtml_Order_Cart_Billing extends Mage_Core_Block_Templ
            return $address;
        }
         return $customerAddress;
-    }
-
-    public function getCart() {
-        if(!$this->cart) {
-            $this->setCart();
-        }
-        return $this->cart; 
-    }
-
-    public function setCart() {
-        $this->cart = Mage::registry('cart');
-        return $this;
     }
 }
