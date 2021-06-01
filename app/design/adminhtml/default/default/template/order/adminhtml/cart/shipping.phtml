@@ -4,13 +4,17 @@
     <div class="entry-edit-head">
         <h4 class="icon-head fieldset-legend head-shipping-address">Shipping Address</h4>
         <div class="form-buttons">
-                <button id="submit_order_top_button" type="button" onclick="redirectUrl('<?php echo $this->getUrl('*/order/saveShippingAddress',array('_current' => true)); ?>')" class="scalable save">
+                <button id="submit_order_top_button" type="button" onclick="redirectUrl('<?php echo $this->getUrl('*/order/shippingAddress',array('_current' => true)); ?>')" class="scalable save">
                     <span><span><span>Save</span></span></span>
                 </button>
             </div>
      </div>
 
     <fieldset class="np">
+        <div id="order-shipping_address_choice" class="order-choose-address">
+                <input type="checkbox" <?php if($address['same_as_billing']){echo "checked";} ?> id="sameAsBillingcheck" name="shipping[same_as_billing]" />
+                <label for="sameAsBilling" class="no-float">Same As Billing Address</label>
+            </div>
     <div class="order-address" id="order-shipping_address_fields">
         <div class="content">
                 <div class="hor-scroll">
@@ -51,6 +55,10 @@
         </table>
             </div>
             </div>
+            <div class="order-save-in-address-book">
+                        <input type="checkbox" name="billingSaveAddressBook">
+                        <label for="saveToAddress">Save in address book</label>
+                    </div>
     </div>
     </fieldset>
 </div>

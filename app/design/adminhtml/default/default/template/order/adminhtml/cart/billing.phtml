@@ -1,4 +1,7 @@
-<?php $address = $this->getBillingAddress(); ?>
+<?php $address = $this->getBillingAddress();
+/*echo "<pre>";
+print_r($address->getData());
+die();*/ ?>
 <div class="entry-edit">
 
     <div class="entry-edit-head">
@@ -26,29 +29,26 @@
         <input id="last_name" name="billing[last_name]" value="<?php echo $address->getLastname(); ?>" class="input-text required-entry" type="text" />            </td>
     </tr>
 <tr>
-        <td class="label"><label for="order-billing_address_street0">Street Address <span class="required">*</span></label></td>
-    <td class="value">
-        <input type="text" name="billing[address]" id="address" value="<?php if($cartBillingAddress->street){echo $cartBillingAddress->street;}if($cartBillingAddress->address){echo $cartBillingAddress->address;}?>"
-                                              placeholder="Address" class="form-control">
-</div>         </td>
+        <td class="label"><label for="address">Street Address <span class="required">*</span></label></td>
+                                        <td class="value">
+                                            <input id="address" name="billing[address]" value="<?php echo $address->getStreet(); ?>" class="input-text required-entry" type="text" />
+                                        </td>
     </tr>
 <tr>
         <td class="label"><label for="order-billing_address_city">City <span class="required">*</span></label></td>
     <td class="value">
-        <input type=" text" name="billing[city]" id="lastname" value="<?php echo $cartBillingAddress->city?>"
-                                              placeholder="City" class="form-control">           </td>
+        <input id="city" name="billing[city]" value="<?php echo $address->getCity(); ?>" class=" required-entry input-text required-entry" type="text" />           </td>
     </tr>
 <tr>
         <td class="label"><label for="order-billing_address_postcode">Zip/Postal Code <span class="required">*</span></label></td>
     <td class="value">
-       <input type="text" name="billing[zipcode]" id="zipcode" value="<?php if($cartBillingAddress->zipcode){echo $cartBillingAddress->zipcode;}if($cartBillingAddress->postcode){echo $cartBillingAddress->postcode;}?>"
-                                              placeholder="Zipcode" class="form-control"></td>
+        <input id="zipcode" name="billing[zipcode]" value="<?php echo $address->getPostcode(); ?>" class=" required-entry input-text required-entry" type="text" />
+    </td>
     </tr>
 <tr>
         <td class="label"><label for="order-billing_address_telephone">Telephone <span class="required">*</span></label></td>
     <td class="value">
-        <input type="number" name="billing[phone]" id="phone" value="<?php if($cartBillingAddress->phone){echo $cartBillingAddress->phone;}if($cartBillingAddress->telephone){echo $cartBillingAddress->telephone;} ?>"
-                                              placeholder="Country" class="form-control">            </td>
+        <input id="telephone" name="billing[telephone]" value="<?php echo $address->getTelephone(); ?>" class=" required-entry input-text required-entry" type="number" />            </td>
     </tr>
 
             </tbody>

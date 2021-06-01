@@ -18,6 +18,6 @@ class Ccc_Order_Block_Adminhtml_Order_Cart_Total extends Ccc_Order_Block_Adminht
     }
 
     public function getSaveUrl(){
-        return $this->getUrl('*/*/order');
+        return $this->getUrl('*/*/placeOrder');
     }
 }

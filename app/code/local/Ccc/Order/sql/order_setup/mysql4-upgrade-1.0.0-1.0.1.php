@@ -27,20 +27,26 @@ $orderCart = $installer->getConnection()
         'unsigned' => true,
         'nullable' => false,
     ))
-    ->addColumn('shippingMethod_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+    ->addColumn('shipping_method_code', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
         'unsigned' => true,
         'nullable' => false,
     ))
-    ->addColumn('shippingAmount', Varien_Db_Ddl_Table::TYPE_DECIMAL, null, array(
+    ->addColumn('shipping_amount', Varien_Db_Ddl_Table::TYPE_DECIMAL, null, array(
         'unsigned' => true,
         'nullable' => false,
     ))
-    ->addColumn('paymentMethod_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+    ->addColumn('payment_method_code', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
         'unsigned' => true,
+        'nullable' => false,
+    ))
+    ->addColumn('shipping_name', Varien_Db_Ddl_Table::TYPE_TEXT, null, array(
+        'unsigned' => true,
+        'nullable' => false,
+    ))
+    ->addColumn('payment_name', Varien_Db_Ddl_Table::TYPE_TEXT, null, array(
         'nullable' => false,
     ))
     ->addColumn('created_at', Varien_Db_Ddl_Table::TYPE_DATETIME, null, array(
-        'unsigned' => true,
         'nullable' => false,
     ));
 

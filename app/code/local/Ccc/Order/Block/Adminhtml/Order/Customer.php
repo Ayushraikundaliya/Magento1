@@ -8,4 +8,6 @@ class Ccc_Order_Block_Adminhtml_Order_Customer extends Mage_Adminhtml_Block_Widg
         $this->_headerText = $this->__('Create New Order');
         $this->_removeButton('add');
     }
+
+    
 }

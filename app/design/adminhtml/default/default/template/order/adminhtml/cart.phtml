@@ -76,28 +76,4 @@
         form.action = value;
         form.submit();
     }
-    function validate(url,method = ''){
-        tbodys = document.getElementById('shipping').children[0];
-        tbodyb = document.getElementById('billing').children[0];
-        checkbox = document.getElementById('sameAsBillingcheck').checked;
-        if(!checkbox){
-            if(method == 's' || method==''){
-                for(i=0;i<7;i++){
-                    if(tbodys.children[i].children[1].children[0].value == ''){
-                        alert("Please Fill All The Field of Shipping Address");
-                        return false;
-                    }
-                }
-            }
-        }
-        if(method == 'b' || method==''){
-            for(i=0;i<7;i++){
-                if(tbodyb.children[i].children[1].children[0].value == ''){
-                    alert("Please Fill All The Field Of Billing Address");
-                    return false;
-                }
-            }
-        }
-        redirectUrl(url);
-    }
 </script>
