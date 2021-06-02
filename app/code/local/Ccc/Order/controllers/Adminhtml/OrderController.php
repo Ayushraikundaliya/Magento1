@@ -55,7 +55,7 @@ class Ccc_Order_Adminhtml_OrderController extends Mage_Adminhtml_Controller_Acti
         $ids = $this->getRequest()->getParam('id');
         $cart = $this->_getCart();
         $itemIds = $cart->getItemIds();
-        $quantity = 1;
+        $quantity = 0;
         if(!$ids){
             Mage::getSingleton('adminhtml/session')->addError('Do select the product');
             $this->_redirect('*/order/new');
@@ -65,11 +65,13 @@ class Ccc_Order_Adminhtml_OrderController extends Mage_Adminhtml_Controller_Acti
             $product = Mage::getModel('catalog/product')->load($id);
             if(in_array($id,$itemIds)){
                 $cartItem = Mage::getModel('order/cart_item')->load(array_search($id,$itemIds));
+                $quantity = $cartItem->getQuantity() + 1;
                 $cartItem->setQuantity($quantity);
                 $cartItem->setBasePrice($product->getPrice());
-                $price = $this->calculatePrice($cartItem->getBasePrice(),$cartItem->getQuantity());
+                $price = $this->price($cartItem->getBasePrice(),$cartItem->getQuantity());
                 $cartItem->setPrice($price);
             }else{
+                $quantity = $quantity + 1;
                 $cartItem = Mage::getModel('order/cart_item');
                 $cartItem->setCartId($cart->getId());
                 $cartItem->setQuantity($quantity);
@@ -150,15 +152,15 @@ class Ccc_Order_Adminhtml_OrderController extends Mage_Adminhtml_Controller_Acti
         $customer = $cart->getCustomer();
         if($saveInAddressBook){
              $customerBillingAddress = $customer->getDefaultBillingAddress();
-            if (!$customerBillingAddress) {
+            /*if (!$customerBillingAddress) {
                 $customerBillingAddress = Mage::getModel('customer/address');
                 $customerBillingAddress->setEntityTypeId($customerBillingAddress->getEntityTypeId());
                 $customerBillingAddress->setParentId($customerId); 
                 $customerBillingAddress->setCustomerId($customerId);
                 $customerBillingAddress->setIsDefaultBilling(1);
-            }
-            $customerBillingAddress->setFirstName($cartAddressModel->getFirstname());
-            $customerBillingAddress->setLastName($cartAddressModel->getLastname());
+            }*/
+            $customerBillingAddress->setFirstname($cartAddressModel->getFirstName());
+            $customerBillingAddress->setLastname($cartAddressModel->getLastName());
             $customerBillingAddress->setStreet($cartAddressModel->getAddress());
             $customerBillingAddress->setCity($cartAddressModel->getCity());
             $customerBillingAddress->setRegion($cartAddressModel->getState());
