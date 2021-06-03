@@ -47,41 +47,11 @@ class Ccc_Order_Block_Adminhtml_Order_Grid extends Mage_Adminhtml_Block_Widget_G
             'index' => 'shipping_name',
         ));
 
-        $this->addColumn('total', array(
+        /*$this->addColumn('total', array(
             'header' => $this->__('Total'),
             'index' => 'total',
             'type'  => 'currency',
-        ));
-
-        $this->addColumn('status', array(
-            'header' => Mage::helper('sales')->__('Status'),
-            'index' => 'status',
-            'type'  => 'options',
-            'width' => '70px',
-            'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
-        ));
-
-        if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/view')) {
-            $this->addColumn('action',
-                array(
-                    'header'    => Mage::helper('sales')->__('Action'),
-                    'width'     => '50px',
-                    'type'      => 'action',
-                    'getter'     => 'getId',
-                    'actions'   => array(
-                        array(
-                            'caption' => Mage::helper('sales')->__('View'),
-                            'url'     => array('base'=>'*/sales_order/view'),
-                            'field'   => 'order_id',
-                            'data-column' => 'action',
-                        )
-                    ),
-                    'filter'    => false,
-                    'sortable'  => false,
-                    'index'     => 'stores',
-                    'is_system' => true,
-            ));
-        }
+        ));*/
         return parent::_prepareColumns();
     }
 

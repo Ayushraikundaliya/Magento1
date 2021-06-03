@@ -10,7 +10,7 @@ class Ccc_Order_Block_Adminhtml_Order_Cart_PaymentMethod extends Ccc_Order_Block
         return $paymentMethods;
     }
 
-    public function getPaymnetMethodUrl() {
+    public function getPaymentMethodUrl() {
         return $this->getUrl('*/order/paymentMethod',array('_current'=>true));
     }
 
